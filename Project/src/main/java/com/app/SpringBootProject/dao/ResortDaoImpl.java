@@ -43,7 +43,6 @@ public class ResortDaoImpl implements IResortDao {
 	@Override
 	public Resort registerResort(Resort resort, long guestId) {
 		LOGGER.info("Entering into registerResort");
-
 		String status = "booked";
 
 		String query = "INSERT INTO resort(guest_id,room_type,arrival_date,departure_date,no_of_people,created_date,updated_date) VALUES (?,?,?,?,?,?,?)";
@@ -134,8 +133,8 @@ public class ResortDaoImpl implements IResortDao {
 	 */
 	@Override
 	public List<Resort> getAllResort(long guestId) {
-		LOGGER.info("Entering into getAllResort");
-		String query = "SELECT * FROM RESORT WHERE guest_id=" + guestId + "";
+		LOGGER.info("Entering into getAllResort in ResortDaoImpl");
+		String query = "SELECT * FROM resort WHERE guest_id=" + guestId + "";
 		List<Resort> resort;
 		try {
 			resort = jdbcTemplate.query(query, new ResortRowMapper());
@@ -144,6 +143,7 @@ public class ResortDaoImpl implements IResortDao {
 			LOGGER.error("DataAccessException occured in get All resort. . .!!!" + e.getStackTrace());
 			return null;
 		}
+		LOGGER.info("Returning all resort details. . .!!!");
 		return resort;
 	}
 

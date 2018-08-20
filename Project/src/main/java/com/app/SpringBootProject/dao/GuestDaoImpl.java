@@ -35,8 +35,8 @@ public class GuestDaoImpl implements IGuestDao {
 	 */
 	@Override
 	public Guest registerGuest(Guest guest) {
-		LOGGER.info("Entering into register guest");
 
+		LOGGER.info("Entering into register guest");
 		long success;
 
 		String query = "INSERT INTO guest(email,first_name,last_name,address,phone,password,created_date,updated_date) VALUES (?,?,?,?,?,?,?,?)";
@@ -71,11 +71,12 @@ public class GuestDaoImpl implements IGuestDao {
 	public long updateGuest(Guest guest, long guestId) {
 		LOGGER.info("Entering into updateGuest");
 		long success;
-		String query = "UPDATE guest SET  first_name=?,last_name=?,address=?,phone=?,password=? WHERE guest_id=?";
+
+		String query = "UPDATE guest SET  first_name=?,last_name=?,address=?,phone=?,password=? ,updated_date=?WHERE guest_id=?";
 
 		try {
 			success = jdbcTemplate.update(query, guest.getFirstName(), guest.getLastName(), guest.getAddress(),
-					guest.getPhone(), guest.getPassword(), guestId);
+					guest.getPhone(), guest.getPassword(), date, guestId);
 			LOGGER.debug("query executed" + success);
 		} catch (DataAccessException e) {
 			LOGGER.error("DataAccessException occured in update guest .!!!");

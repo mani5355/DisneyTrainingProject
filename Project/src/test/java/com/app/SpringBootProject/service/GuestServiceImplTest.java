@@ -1,5 +1,6 @@
 package com.app.SpringBootProject.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
@@ -14,12 +15,12 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.app.SpringBootProject.bean.Guest;
-import com.app.SpringBootProject.dao.IGuestDao;
+import com.app.SpringBootProject.dao.GuestDaoImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class GuestServiceImplTest {
 	@Mock
-	IGuestDao dao;
+	GuestDaoImpl dao;
 
 	@InjectMocks
 	GuestServiceImpl service;
@@ -27,11 +28,11 @@ public class GuestServiceImplTest {
 	Guest g = new Guest();
 	Date date = new Date();
 
-	@Before
+	/*@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 	}
-
+*/
 	@Test
 	public void testRegisterGuest() {
 		g.setEmail("test@c.com");
@@ -78,13 +79,24 @@ public class GuestServiceImplTest {
 
 	@Test
 	public void testValidateGuest() {
+		Guest g2 = new Guest();
+		g2.setEmail("updated@g.com");
+		g2.setFirstName("test");
+		g2.setLastName("test");
+		g2.setAddress("duummy");
+		g2.setPassword("123");
+		g2.setPhone("488455");
 
-		g.setEmail("updated@g.com");
-		g.setPassword("123");
+	/*	g.setEmail("updated@g.com");
+		g.setPassword("123");*/
 
-		when(dao.validate(g.getEmail(), g.getPassword())).thenReturn(g);
-		Guest testGuest = service.validate(g.getEmail(), g.getPassword());
-		assertNotNull(testGuest);
+		when(dao.validate("updated@g.com", "123")).thenReturn(g2);
+		Guest testGuest = service.validate("updated@g.com", "123");
+		System.out.println(testGuest+".......................................");
+		System.out.println(g2+"...................................................");
+		
+		assertEquals(g2, testGuest);
+		//assertNotNull(testGuest);
 	}
 
 }

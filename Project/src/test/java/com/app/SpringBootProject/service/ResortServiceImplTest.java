@@ -15,13 +15,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.app.SpringBootProject.bean.Guest;
 import com.app.SpringBootProject.bean.Resort;
-import com.app.SpringBootProject.dao.IResortDao;
+import com.app.SpringBootProject.dao.ResortDaoImpl;
 
 @RunWith(SpringRunner.class)
 public class ResortServiceImplTest {
 
 	@Mock
-	IResortDao rDao;
+	ResortDaoImpl rDao;
 
 	@InjectMocks
 	ResortServiceImpl rservice;
@@ -36,18 +36,19 @@ public class ResortServiceImplTest {
 
 	@Test
 	public void testRegisterResort() {
-		guest.setguestId(1);
-		long guestId = guest.getguestId();
+/*		guest.setguestId(1);
+		long guestId = guest.getguestId();*/
 
 		Resort resort = new Resort();
 		resort.setRoomType("deluxtest");
 		resort.setNoOfPeople(2);
 		resort.setArrivalDate(date);
 		resort.setDepartureDate(date);
-		resort.setGuestId(guestId);
+		
+		resort.setGuestId(1);
 
-		when(rDao.registerResort(resort, guestId)).thenReturn(resort);
-		Resort test = rservice.registerResort(resort, guestId);
+		when(rDao.registerResort(resort, 1)).thenReturn(resort);
+		Resort test = rservice.registerResort(resort, 1);
 		assertNotNull(test);
 
 	}

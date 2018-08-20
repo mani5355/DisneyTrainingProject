@@ -16,13 +16,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.app.SpringBootProject.bean.Dining;
 import com.app.SpringBootProject.bean.Guest;
-import com.app.SpringBootProject.dao.IDiningDao;
+import com.app.SpringBootProject.dao.DiningDaoImpl;
 
 @RunWith(SpringRunner.class)
 public class DiningServiceImplTest {
 
 	@Mock
-	IDiningDao dao;
+	DiningDaoImpl dao;
 
 	@InjectMocks
 	DiningServiceImpl service;
@@ -40,10 +40,17 @@ public class DiningServiceImplTest {
 	public void testRegisterDining() {
 
 		guest.setguestId(1);
+		System.out.println(guest.getguestId()+"....................");
+	
 		dining.setGuestId(guest.getguestId());
+		
+		System.out.println(dining.getGuestId()+"....................");
 		dining.setDiningType("test");
+		System.out.println(dining.getDiningType()+"....................");
 		dining.setArrivalDate(date);
+		System.out.println(dining.getArrivalDate()+"....................");
 		dining.setNoOfPeople(1);
+		System.out.println(dining.getNoOfPeople()+"....................");
 
 		when(dao.registerDining(dining, guest.getguestId())).thenReturn(dining);
 		Dining test = service.registerDining(dining, guest.getguestId());
@@ -77,14 +84,6 @@ public class DiningServiceImplTest {
 		assertNotNull(test);
 	}
 
-	@Test
-	public void testGetAllDining() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCancelDining() {
-		fail("Not yet implemented");
-	}
+	
 
 }

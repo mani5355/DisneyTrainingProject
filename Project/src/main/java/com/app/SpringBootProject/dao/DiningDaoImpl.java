@@ -40,30 +40,25 @@ public class DiningDaoImpl implements IDiningDao {
 	 */
 	@Override
 	public Dining registerDining(Dining dining, long guestId) {
+
 		LOGGER.info("Entering into register dining");
 		String status = "booked";
-
 		String query = "INSERT INTO dining(guest_id,dining_type,arrival_date,no_of_people,created_date,updated_date) VALUES (?,?,?,?,?,?)";
 		long success;
 		try {
-
 			success = jdbcTemplate.update(query, guestId, dining.getDiningType(), dining.getArrivalDate(),
 					dining.getNoOfPeople(), date, date);
-
 			LOGGER.debug("query executed" + success);
 		} catch (DataAccessException e) {
-
 			LOGGER.error("DataAccessException occured in register dining. . .!!!" + e.getMessage());
 			return null;
 		}
 
 		if (success == 1) {
 			String query1 = "UPDATE dining SET status=? ";
-
 			success = jdbcTemplate.update(query1, status);
 			LOGGER.info("status updated successfully");
 			LOGGER.debug("query executed" + success);
-
 		}
 
 		Dining dining1 = jdbcTemplate.queryForObject(
@@ -139,8 +134,9 @@ public class DiningDaoImpl implements IDiningDao {
 	 */
 	@Override
 	public List<Dining> getAllDining(long guestId) {
-		LOGGER.info("Entering into getAllDining");
-		String query = "SELECT * FROM DINING WHERE guest_id=" + guestId + "";
+
+		LOGGER.info("Entering into getAllDining in DiningDaoImpl");
+		String query = "SELECT * FROM dining WHERE guest_id=" + guestId + "";
 		List<Dining> dining;
 		try {
 			dining = jdbcTemplate.query(query, new DiningRowMapper());
@@ -148,8 +144,9 @@ public class DiningDaoImpl implements IDiningDao {
 		} catch (DataAccessException e) {
 			LOGGER.error("DataAccessException occured in get All Dining. . .!!!" + e.getMessage());
 			return null;
-
 		}
+
+		LOGGER.info("returning all dining details. . .!!!");
 		return dining;
 
 	}

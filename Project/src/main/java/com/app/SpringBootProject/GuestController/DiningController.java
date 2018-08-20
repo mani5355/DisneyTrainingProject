@@ -1,5 +1,8 @@
 package com.app.SpringBootProject.GuestController;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -72,6 +75,7 @@ public class DiningController {
 	public ResponseEntity<Object> updateDining(@PathVariable long dReservationNumber, @RequestBody Dining dining) {
 		ErrorResponse errorResponse = new ErrorResponse();
 		LOGGER.info("Entering into /dining/update/{dReservationNumber}");
+
 		long status = 0;
 		status = service.updateDining(dining, dReservationNumber);
 		Dining dining1 = service.getDining(dReservationNumber);
@@ -137,17 +141,20 @@ public class DiningController {
 	 * @return the response entity
 	 */
 	@PutMapping("/dining/cancel/{dReservationNumber}")
-	public ResponseEntity<Dining> cancelDining(@PathVariable long dReservationNumber) {
+	public ResponseEntity<Object> cancelDining(@PathVariable long dReservationNumber) {
 		LOGGER.info("Entering into /dining/cancel/{dReservationNumber}");
+		ErrorResponse errorResponse = new ErrorResponse();
 		long success = 0;
 		success = service.cancelDining(dReservationNumber);
 
 		if (success > 0) {
 			LOGGER.info("Dining information deleted successfully......");
-			return new ResponseEntity<Dining>(HttpStatus.CREATED);
+			errorResponse.setErrorMessage("Dining information deleted successfully......");
+			return new ResponseEntity<Object>(errorResponse, HttpStatus.CREATED);
 		} else {
 			LOGGER.error("Failed to delete Dining information......");
-			return new ResponseEntity<Dining>(HttpStatus.BAD_REQUEST);
+			errorResponse.setErrorMessage("Failed to delete Dining information......");
+			return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);
 		}
 
 	}

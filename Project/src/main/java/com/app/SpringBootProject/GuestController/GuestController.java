@@ -1,6 +1,8 @@
 package com.app.SpringBootProject.GuestController;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -91,7 +93,6 @@ public class GuestController {
 		LOGGER.info("You have logged in successfully");
 		return new ResponseEntity<Object>(guest1, HttpStatus.ACCEPTED);
 		
-
 	}
 
 	/**
@@ -107,6 +108,7 @@ public class GuestController {
 		ErrorResponse errorResponse = new ErrorResponse();
 		LOGGER.info("Entering into /guest/register");
 
+		
 		Guest guest1 = service.registerGuest(guest);
 		if (guest1 != null) {
 			LOGGER.info("You have been registered successfully");
@@ -179,7 +181,7 @@ public class GuestController {
 	 */
 	@GetMapping("/guest/view/{guestId}")
 	public List<Object> viewItenarary(@PathVariable long guestId) {
-		LOGGER.info("Entering into /guest/view/{guestId}");
+		/*LOGGER.info("Entering into /guest/view/{guestId}");
 		List<Object> list = new ArrayList<>();
 
 		List<Resort> resort = resortService.getAllResort(guestId);
@@ -188,7 +190,19 @@ public class GuestController {
 		list.add(resort);
 		list.add(dining);
 		return list;
-
+*/
+		LOGGER.debug("GuestController:Debugging loginGuest method");
+		LOGGER.info("GuestController:	Viewing Guest Booking Details.");
+		List<Object> list = new ArrayList<>();
+		LOGGER.info("Viewing Guest Resort Booking Details.");
+		List<Resort> resort = resortService.getAllResort(guestId);
+		LOGGER.info("Viewing Dinning Guest Booking Details.");
+		List<Dining> dining = diningService.getAllDining(guestId);
+		list.add(resort);
+		list.add(dining);
+		return list;
+		
+		
 	}
 
 }
