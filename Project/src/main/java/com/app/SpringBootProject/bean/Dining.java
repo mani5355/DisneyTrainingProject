@@ -16,7 +16,7 @@ public class Dining {
 	private long guestId;
 
 	/** The dining type. */
-	@Size(max = 50)
+	
 	private String diningType;
 
 	/** The arrival date. */

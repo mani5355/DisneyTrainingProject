@@ -1,8 +1,5 @@
 package com.app.SpringBootProject.GuestController;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -49,28 +46,7 @@ public class ResortController {
 	public ResponseEntity<Object> register(@PathVariable long guestId, @RequestBody Resort resort) {
 		ErrorResponse errorResponse = new ErrorResponse();
 		LOGGER.info("Entering into /resort/register/{guestId}");
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
-
-		Date date1 = resort.getArrivalDate();
-		Date date2 = resort.getDepartureDate();
-
-		Date date3;
-		Date date4;
-		try {
-			date3 = formatter.parse(formatter.format(date1));
-		} catch (ParseException e) {
-			errorResponse.setErrorMessage("parsing error. . .!!!");
-			return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);
-		}
-		try {
-			date4 = formatter.parse(formatter.format(date2));
-		} catch (ParseException e) {
-			errorResponse.setErrorMessage("parsing error. . .!!!");
-			return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);
-		}
-		resort.setArrivalDate(date3);
-		resort.setDepartureDate(date4);
-
+	
 		Resort resort1 = service.registerResort(resort, guestId);
 		if (resort1 != null) {
 			LOGGER.info("Resort registration successfull......");
@@ -95,29 +71,6 @@ public class ResortController {
 		ErrorResponse errorResponse = new ErrorResponse();
 		LOGGER.info("Entering into /resort/update/{rReservationNumber}");
 		long status = 0;
-
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd");
-
-		Date date1 = resort.getArrivalDate();
-		Date date2 = resort.getDepartureDate();
-
-		Date date3;
-		Date date4;
-		try {
-			date3 = formatter.parse(formatter.format(date1));
-		} catch (ParseException e) {
-			errorResponse.setErrorMessage("parsing error. . .!!!");
-			return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);
-		}
-		try {
-			date4 = formatter.parse(formatter.format(date2));
-		} catch (ParseException e) {
-			errorResponse.setErrorMessage("parsing error. . .!!!");
-			return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);
-		}
-		resort.setArrivalDate(date3);
-		resort.setDepartureDate(date4);
-
 		status = service.updateResort(resort, rReservationNumber);
 
 		Resort resort1 = service.getResort(rReservationNumber);

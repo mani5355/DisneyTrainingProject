@@ -4,14 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
-import java.util.Date;
-
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.app.SpringBootProject.bean.Guest;
@@ -26,13 +22,9 @@ public class GuestServiceImplTest {
 	GuestServiceImpl service;
 
 	Guest g = new Guest();
-	Date date = new Date();
+	
 
-	/*@Before
-	public void setup() {
-		MockitoAnnotations.initMocks(this);
-	}
-*/
+	
 	@Test
 	public void testRegisterGuest() {
 		g.setEmail("test@c.com");
